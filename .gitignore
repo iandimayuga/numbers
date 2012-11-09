@@ -1,6 +1,10 @@
+*.tar.gz
 *.class
+.*.swp
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Eclipse Files #
+.classpath
+.settings/
+.project
+.metadata
+bin/
