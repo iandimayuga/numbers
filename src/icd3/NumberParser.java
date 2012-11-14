@@ -63,14 +63,75 @@ public class NumberParser
      */
     public static int parseNumber(String text) throws InvalidNumberException
     {
-        if (text.equals("zero"))
+        // Explicitly exclude the empty string
+        if (text.trim().length() == 0)
         {
-            return 0;
+            throw new InvalidNumberException("Empty input is invalid.");
         }
-        else
+
+        // Assume that text ends with a space. Append one to ensure it does.
+        text = text.toLowerCase() + " ";
+
+        // Build the master regex pattern string
+        StringBuilder masterBuilder = new StringBuilder();
+
+        // Add the leading whitespace and the negation
+        masterBuilder.append(String.format("\\s*(?<%s>%s\\s+)?", GROUP_NEGATIVE, REGEX_NEGATIVE));
+
+        // Add the zero and the "or" operator
+        masterBuilder.append(String.format("((?<%s>%s)|(", GROUP_ZERO, REGEX_ZERO));
+
+        // Add the triplet groups. This is extensible to billions, trillions, etc.
+        for (int i = TRIPLE_POWERS.length - 1; i >= 0; --i)
         {
-            throw new InvalidNumberException("Only zero is allowed at this time.", 0);
+            // triple"n" refers to the triplet at the nth power of one thousand
+            masterBuilder.append(String.format("((?<%s%d>[a-z]+)\\s+%s\\s+)?", GROUP_TRIPLE, i, TRIPLE_POWERS[i]));
         }
+
+        // Close the number group and add trailing whitespace
+        masterBuilder.append("))\\s*");
+
+        // For a number that only extends to the millions, this should produce the following regular expression:
+        // \s*(?<negative>(minus|negative)\s+)?((?<zero>(zero|naught))|(((?<triple2>[a-z]+)\s+million\s+)?((?<triple1>[a-z]+)\s+thousand\s+)?(?<triple0>[a-z]+)?))\s*");
+        Pattern masterPattern = Pattern.compile(masterBuilder.toString());
+
+        Matcher matcher = masterPattern.matcher(text);
+
+        if (!matcher.matches())
+        {
+            throw new InvalidNumberException("Invalid number format: " + text);
+        }
+
+        // Separate into groups and parse each one
+        int result = 0;
+
+        // If we matched the zero group then we are done
+        String zero = matcher.group(GROUP_ZERO);
+        if (null != zero)
+        {
+            return result;
+        }
+
+        // Otherwise, we need to iterate through each triple and add the results together
+        for (int i = 0; i < TRIPLE_POWERS.length; ++i)
+        {
+            String triple = matcher.group(String.format("%s%d", GROUP_TRIPLE, i));
+            if (triple != null)
+            {
+                try
+                {
+                    // Parse the triplet and multiply it by its power
+                    result += parseTriple(triple) * Math.pow(ONE_THOUSAND, i);
+                } catch (InvalidNumberException e)
+                {
+                    // Add the information regarding the power and rethrow
+                    throw new InvalidNumberException(String.format("Invalid triple in the %ss place: '%s'",
+                            i > 0 ? TRIPLE_POWERS[i] : "one", triple));
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
