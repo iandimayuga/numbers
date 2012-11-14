@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class NumberParser
 {
     // Regex for powers of one thousand. Add billions, trillions to extend.
-    private static final String[] TRIPLE_POWERS = { "", "(thousand)", "(million)" };
+    private static final String[] TRIPLE_POWERS = { "", "thousand ", "million " };
 
     // Constant multiplier for powers of ten
     private static final int ONE_THOUSAND = 1000;
@@ -54,12 +54,12 @@ public class NumberParser
 
     /**
      * Parses an American English representation of a number between negative one billion and positive one billion,
-     * exclusive.
+     * exclusive. Does not accept empty or whitespace-only input.
      *
      * @param text The textual representation.
      * @return The integer representation.
      * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [-999999999, 999999999]
+     *             [-999999999, 999999999], or if the input is empty or only whitespace.
      */
     public static int parseNumber(String text) throws InvalidNumberException
     {
@@ -85,7 +85,7 @@ public class NumberParser
         for (int i = TRIPLE_POWERS.length - 1; i >= 0; --i)
         {
             // triple"n" refers to the triplet at the nth power of one thousand
-            masterBuilder.append(String.format("((?<%s%d>[a-z]+)\\s+%s\\s+)?", GROUP_TRIPLE, i, TRIPLE_POWERS[i]));
+            masterBuilder.append(String.format("((?<%s%d>[ a-z]+\\s+)%s)?", GROUP_TRIPLE, i, TRIPLE_POWERS[i]));
         }
 
         // Close the number group and add trailing whitespace
@@ -99,7 +99,7 @@ public class NumberParser
 
         if (!matcher.matches())
         {
-            throw new InvalidNumberException("Invalid number format: " + text);
+            throw new InvalidNumberException(String.format("Invalid number format: '%s'", text.trim()));
         }
 
         // Separate into groups and parse each one
@@ -107,7 +107,7 @@ public class NumberParser
 
         // If we matched the zero group then we are done
         String zero = matcher.group(GROUP_ZERO);
-        if (null != zero)
+        if (zero != null)
         {
             return result;
         }
@@ -125,10 +125,16 @@ public class NumberParser
                 } catch (InvalidNumberException e)
                 {
                     // Add the information regarding the power and rethrow
-                    throw new InvalidNumberException(String.format("Invalid triple in the %ss place: '%s'",
-                            i > 0 ? TRIPLE_POWERS[i] : "one", triple));
+                    throw new InvalidNumberException(String.format("Invalid triple in the %ss place: %s",
+                            i > 0 ? TRIPLE_POWERS[i] : "one", e.getMessage()));
                 }
             }
+        }
+
+        String negative = matcher.group(GROUP_NEGATIVE);
+        if (negative != null)
+        {
+            result = -result;
         }
 
         return result;
