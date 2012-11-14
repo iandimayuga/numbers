@@ -19,7 +19,6 @@ public class NumberParser
     private static final int ONE_THOUSAND = 1000;
     private static final int ONE_HUNDRED = 100;
     private static final int TEN = 10;
-    private static final int ONE = 1;
 
     // Regexes for negation and zero
     private static final String REGEX_NEGATIVE = "minus|negative";
@@ -32,11 +31,12 @@ public class NumberParser
     private static final String REGEX_HUNDRED = "hundred";
 
     // Words used for numbers
-    private static final String[] DIGITS = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    private static final String[] DIGITS = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+            "nine" };
     private static final String[] TEENS = { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
             "seventeen", "eighteen", "nineteen" };
-    private static final String[] MULTIPLES_OF_TEN = { "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
-            "eighty", "ninety" };
+    private static final String[] MULTIPLES_OF_TEN = { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty",
+            "seventy", "eighty", "ninety" };
 
     // Capture group names
     private static final String GROUP_NEGATIVE = "negative";
@@ -162,10 +162,10 @@ public class NumberParser
             numberLookup.put(TRIPLE_POWERS[i], i * ONE_THOUSAND);
         }
 
-        // Generate digits (excluding zero)
+        // Generate digits
         for (int i = 0; i < DIGITS.length; ++i)
         {
-            numberLookup.put(DIGITS[i], i + ONE);
+            numberLookup.put(DIGITS[i], i);
         }
 
         // Generate teens (including ten)
@@ -174,10 +174,10 @@ public class NumberParser
             numberLookup.put(TEENS[i], i + TEN);
         }
 
-        // Generate multiples of ten (excluding ten)
+        // Generate multiples of ten
         for (int i = 0; i < MULTIPLES_OF_TEN.length; ++i)
         {
-            numberLookup.put(MULTIPLES_OF_TEN[i], i * TEN + TEN);
+            numberLookup.put(MULTIPLES_OF_TEN[i], i * TEN);
         }
 
         return numberLookup;
