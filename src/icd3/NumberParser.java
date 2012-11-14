@@ -135,84 +135,16 @@ public class NumberParser
     }
 
     /**
-     * Parses an American English representation of a number between zero and positive one thousand, exclusive.
+     * Parses an American English representation of a number between zero and positive one thousand, exclusive. Does not
+     * accept empty or whitespace-only input.
      *
      * @param triple The textual representation.
      * @return The integer representation.
      * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [1, 999].
+     *             [1, 999], or if the input is empty or only whitespace.
      */
     public static int parseTriple(String triple) throws InvalidNumberException
     {
-        if (triple.equals("one"))
-        {
-            return 1;
-        }
-        else
-        {
-            throw new InvalidNumberException("Only one is allowed at this time.");
-        }
-    }
-
-    /**
-     * Parses an American English representation of a multiple of ten between twenty and one hundred, exclusive of one
-     * hundred.
-     *
-     * @param multipleOfTen The textual representation.
-     * @return The integer representation.
-     * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [20, 90] and equivalent to 0 mod 10.
-     */
-    public static int parseMultipleOfTen(String multipleOfTen) throws InvalidNumberException
-    {
-        if (multipleOfTen.equals("twenty"))
-        {
-            return 10;
-        }
-        else
-        {
-            throw new InvalidNumberException("Only twenty is allowed at this time.");
-        }
-    }
-
-    /**
-     * Parses an American English representation of a number between ten and twenty, exclusive of twenty.
-     *
-     * @param teen The textual representation.
-     * @return The integer representation.
-     * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [10, 19].
-     */
-    public static int parseTeen(String teen) throws InvalidNumberException
-    {
-        if (teen.equals("ten"))
-        {
-            return 10;
-        }
-        else
-        {
-            throw new InvalidNumberException("Only ten is allowed at this time.");
-        }
-    }
-
-    /**
-     * Parses an American English representation of a number between zero and positive ten, exclusive.
-     *
-     * @param digit The textual representation.
-     * @return The integer representation.
-     * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [1, 9].
-     */
-    public static int parseDigit(String digit) throws InvalidNumberException
-    {
-        if (digit.equals("one"))
-        {
-            return 1;
-        }
-        else
-        {
-            throw new InvalidNumberException("Only one is allowed at this time.");
-        }
     }
 
     private static Map<String, Integer> generateLookup()

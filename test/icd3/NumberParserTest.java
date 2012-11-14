@@ -21,23 +21,4 @@ public class NumberParserTest
     {
         assertEquals(123, NumberParser.parseTriple("one hundred twenty three"));
     }
-
-    @Test
-    public void testParseMultipleOfTen() throws InvalidNumberException
-    {
-        assertEquals(30, NumberParser.parseMultipleOfTen("thirty"));
-    }
-
-    @Test
-    public void testParseTeen() throws InvalidNumberException
-    {
-        assertEquals(13, NumberParser.parseTeen("thirteen"));
-    }
-
-    @Test
-    public void testParseDigit() throws InvalidNumberException
-    {
-        assertEquals(5, NumberParser.parseDigit("five"));
-    }
-
 }
