@@ -87,7 +87,7 @@ public class NumberParser
         }
         else
         {
-            throw new InvalidNumberException("Only one is allowed at this time.", 0);
+            throw new InvalidNumberException("Only one is allowed at this time.");
         }
     }
 
@@ -108,7 +108,7 @@ public class NumberParser
         }
         else
         {
-            throw new InvalidNumberException("Only twenty is allowed at this time.", 0);
+            throw new InvalidNumberException("Only twenty is allowed at this time.");
         }
     }
 
@@ -128,7 +128,7 @@ public class NumberParser
         }
         else
         {
-            throw new InvalidNumberException("Only ten is allowed at this time.", 0);
+            throw new InvalidNumberException("Only ten is allowed at this time.");
         }
     }
 
@@ -148,7 +148,7 @@ public class NumberParser
         }
         else
         {
-            throw new InvalidNumberException("Only one is allowed at this time.", 0);
+            throw new InvalidNumberException("Only one is allowed at this time.");
         }
     }
 

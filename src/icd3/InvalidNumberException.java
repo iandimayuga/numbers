@@ -2,10 +2,10 @@ package icd3;
 
 import java.text.ParseException;
 
-public class InvalidNumberException extends ParseException
+public class InvalidNumberException extends Exception
 {
-    public InvalidNumberException(String s, int errorOffset)
+    public InvalidNumberException(String message)
     {
-        super(s, errorOffset);
+        super(message);
     }
 }
