@@ -49,23 +49,22 @@ public class NumberParser
     }
 
     /**
-     * Parses an American English representation of a number between zero and positive one thousand, exclusive of one
-     * thousand.
+     * Parses an American English representation of a number between zero and positive one thousand, exclusive.
      *
      * @param triple The textual representation.
      * @return The integer representation.
      * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [0, 999].
+     *             [1, 999].
      */
     public static int parseTriple(String triple) throws InvalidNumberException
     {
-        if (triple.equals("zero"))
+        if (triple.equals("one"))
         {
-            return 0;
+            return 1;
         }
         else
         {
-            throw new InvalidNumberException("Only zero is allowed at this time.", 0);
+            throw new InvalidNumberException("Only one is allowed at this time.", 0);
         }
     }
 
@@ -111,22 +110,22 @@ public class NumberParser
     }
 
     /**
-     * Parses an American English representation of a number between zero and positive ten, exclusive of ten.
+     * Parses an American English representation of a number between zero and positive ten, exclusive.
      *
      * @param digit The textual representation.
      * @return The integer representation.
      * @throws InvalidNumberException If the input is not a proper American English representation of a number within
-     *             [0, 9].
+     *             [1, 9].
      */
     public static int parseDigit(String digit) throws InvalidNumberException
     {
-        if (digit.equals("zero"))
+        if (digit.equals("one"))
         {
-            return 0;
+            return 1;
         }
         else
         {
-            throw new InvalidNumberException("Only zero is allowed at this time.", 0);
+            throw new InvalidNumberException("Only one is allowed at this time.", 0);
         }
     }
 }
