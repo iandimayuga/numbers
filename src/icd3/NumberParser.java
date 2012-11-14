@@ -151,6 +151,59 @@ public class NumberParser
      */
     public static int parseTriple(String triple) throws InvalidNumberException
     {
+        if (triple.trim().length() == 0)
+        {
+            throw new InvalidNumberException(String.format("Empty triple is invalid."));
+        }
+        // Need to assume triple ends in a space. Add a space to ensure it does.
+        triple = triple.toLowerCase() + " ";
+        StringBuilder tripleBuilder = new StringBuilder();
+        // Add the hundreds place
+        tripleBuilder.append(String.format("\\s*((?<%s>%s\\s+)%s\\s+)?", GROUP_HUNDRED, REGEX_DIGIT, REGEX_HUNDRED));
+        // Add the multiples of ten
+        tripleBuilder.append(String.format("(((?<%s>%s\\s+)?", GROUP_MULTIPLE_OF_TEN, REGEX_MULTIPLE_OF_TEN));
+        // Add the digits and the or
+        tripleBuilder.append(String.format("(?<%s>%s\\s+)?)|", GROUP_DIGIT, REGEX_DIGIT));
+        // Add the teens
+        tripleBuilder.append(String.format("(?<%s>%s\\s+))", GROUP_TEEN, REGEX_TEEN));
+        Pattern triplePattern = Pattern.compile(tripleBuilder.toString());
+        Matcher matcher = triplePattern.matcher(triple);
+        if (!matcher.matches())
+        {
+            throw new InvalidNumberException(String.format("'%s' is not a valid triple.", triple.trim()));
+        }
+        // Look up each group
+        int result = 0;
+        // Get the hundreds place, if any
+        String hundred = matcher.group(GROUP_HUNDRED);
+        if (hundred != null)
+        {
+            // Because we're just looking up digits, we must multiply by one hundred
+            result += s_numberLookup.get(hundred.trim()) * ONE_HUNDRED;
+        }
+        // Get either the tens and ones place individually, or as a teen
+        String multipleOfTen = matcher.group(GROUP_MULTIPLE_OF_TEN);
+        String digit = matcher.group(GROUP_DIGIT);
+        String teen = matcher.group(GROUP_TEEN);
+
+        if (teen != null)
+        {
+            result += s_numberLookup.get(teen.trim());
+        }
+        else
+        {
+            // Not a teen, so must be a ten and/or a one
+            if (multipleOfTen != null)
+            {
+                result += s_numberLookup.get(multipleOfTen.trim());
+            }
+            if (digit != null)
+            {
+                result += s_numberLookup.get(digit.trim());
+            }
+        }
+
+        return result;
     }
 
     private static Map<String, Integer> generateLookup()
