@@ -5,6 +5,8 @@ package icd3;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Static tools to translate an American English representation of a number to its integer representation.
@@ -13,7 +15,7 @@ import java.util.Map;
 public class NumberParser
 {
     // Regex for powers of one thousand. Add billions, trillions to extend.
-    private static final String[] TRIPLE_POWERS = { "", "thousand", "million" };
+    private static final String[] TRIPLE_POWERS = { "", "(thousand)", "(million)" };
 
     // Constant multiplier for powers of ten
     private static final int ONE_THOUSAND = 1000;
@@ -21,14 +23,14 @@ public class NumberParser
     private static final int TEN = 10;
 
     // Regexes for negation and zero
-    private static final String REGEX_NEGATIVE = "minus|negative";
-    private static final String REGEX_ZERO = "zero|naught";
+    private static final String REGEX_NEGATIVE = "(minus|negative)";
+    private static final String REGEX_ZERO = "(zero|naught)";
 
     // Regexes for numbers involved in triples
-    private static final String REGEX_DIGIT = "one|two|three|four|five|six|seven|eight|nine";
-    private static final String REGEX_TEEN = "ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen";
-    private static final String REGEX_MULTIPLE_OF_TEN = "twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety";
-    private static final String REGEX_HUNDRED = "hundred";
+    private static final String REGEX_DIGIT = "(one|two|three|four|five|six|seven|eight|nine)";
+    private static final String REGEX_TEEN = "(ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen)";
+    private static final String REGEX_MULTIPLE_OF_TEN = "(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)";
+    private static final String REGEX_HUNDRED = "(hundred)";
 
     // Words used for numbers
     private static final String[] DIGITS = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
