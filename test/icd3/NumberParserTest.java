@@ -5,12 +5,18 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
 import org.junit.Test;
 
+/**
+ * @author ian
+ *
+ */
 public class NumberParserTest
 {
+    /**
+     * Structured basis test for {@link NumberParser#parseNumber(String)}.
+     */
     @Test
     public void testParseNumber() throws InvalidNumberException
     {
@@ -60,6 +66,9 @@ public class NumberParserTest
         }
     }
 
+    /**
+     * Structured basis test for {@link NumberParser#parseTriple(String)}.
+     */
     @Test
     public void testParseTriple() throws InvalidNumberException
     {
