@@ -63,6 +63,47 @@ public class NumberParserTest
     @Test
     public void testParseTriple() throws InvalidNumberException
     {
-        assertEquals(123, NumberParser.parseTriple("one hundred twenty three"));
+        Map<String, Integer> m = new HashMap<>();
+
+        // ones place
+        m.put("two", 2);
+
+        // tens place
+        m.put("thirty", 30);
+
+        // hundreds place
+        m.put("nine hundred", 900);
+
+        // teen
+        m.put("seventeen", 17);
+
+        // tens and ones
+        m.put("forty two", 42);
+
+        // hundreds and ones
+        m.put("four hundred nine", 409);
+
+        // hundreds and teen
+        m.put("two hundred ten", 210);
+
+        // hundreds and tens
+        m.put("seven hundred twenty", 720);
+
+        // all places
+        m.put("three hundred sixty five", 365);
+
+        // case insensitivity
+        m.put("nIne HundRed eiGhtY SEVEN", 987);
+
+        // whitespace insensitivity
+        m.put("      five\t hundred \n eleven   \r\n   ", 511);
+
+        for (Entry<String, Integer> entry : m.entrySet())
+        {
+            String input = entry.getKey();
+            int expected = entry.getValue();
+
+            assertEquals(expected, NumberParser.parseTriple(input));
+        }
     }
 }
