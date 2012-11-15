@@ -47,9 +47,9 @@ public class NumberParserTest
 
         // Test negative
         m.put("negative zero", 0);
-        m.put("minus one hundred twenty three million four hundred fifty six thousand seven hundred eighty nine", -123456789);
+        m.put("minus one hundred twenty three million four hundred fifty six thousand seven hundred eighty nine",
+                -123456789);
         m.put("negative forty two", -42);
-
 
         // case insensitivity
         m.put("nIne HundRed eiGhtY SEVEN thOUSand FiFtEeN", 987015);
@@ -114,5 +114,77 @@ public class NumberParserTest
 
             assertEquals(expected, NumberParser.parseTriple(input));
         }
+    }
+
+    /**
+     * Test for null input for {@link NumberParser#parseNumber(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseNumberNull() throws InvalidNumberException
+    {
+        NumberParser.parseNumber(null);
+    }
+
+    /**
+     * Test for null input for {@link NumberParser#parseTriple(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseTripleNull() throws InvalidNumberException
+    {
+        NumberParser.parseTriple(null);
+    }
+
+    /**
+     * Test for empty input for {@link NumberParser#parseNumber(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseNumberEmpty() throws InvalidNumberException
+    {
+        NumberParser.parseNumber("");
+    }
+
+    /**
+     * Test for empty input for {@link NumberParser#parseTriple(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseTripleEmpty() throws InvalidNumberException
+    {
+        NumberParser.parseTriple("");
+    }
+
+    /**
+     * Test for whitespace input for {@link NumberParser#parseNumber(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseNumberWhite() throws InvalidNumberException
+    {
+        NumberParser.parseNumber("\r\n ");
+    }
+
+    /**
+     * Test for whitespace input for {@link NumberParser#parseTriple(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseTripleWhite() throws InvalidNumberException
+    {
+        NumberParser.parseTriple("\r\n ");
+    }
+
+    /**
+     * Test for invalid input for {@link NumberParser#parseNumber(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseNumberGibberish() throws InvalidNumberException
+    {
+        NumberParser.parseNumber("google");
+    }
+
+    /**
+     * Test for invalid numerical input for {@link NumberParser#parseNumber(String)}.
+     */
+    @Test(expected = InvalidNumberException.class)
+    public void testParseNumberMalformed() throws InvalidNumberException
+    {
+        NumberParser.parseNumber("one million thousand");
     }
 }
