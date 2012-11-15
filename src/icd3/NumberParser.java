@@ -85,7 +85,7 @@ public class NumberParser
         for (int i = TRIPLE_POWERS.length - 1; i >= 0; --i)
         {
             // triple"n" refers to the triplet at the nth power of one thousand
-            masterBuilder.append(String.format("((?<%s%d>[ a-z]+\\s+)%s)?", GROUP_TRIPLE, i, TRIPLE_POWERS[i]));
+            masterBuilder.append(String.format("((?<%s%d>[\\sa-z]+\\s+)%s)?", GROUP_TRIPLE, i, TRIPLE_POWERS[i]));
         }
 
         // Close the number group and add trailing whitespace
