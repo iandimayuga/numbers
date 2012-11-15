@@ -19,6 +19,8 @@ public class NumbersMain
             lines.append(in.nextLine());
         }
 
+        in.close();
+
         int result = 0;
 
         try
@@ -37,8 +39,6 @@ public class NumbersMain
 
         // Print result
         System.out.println(result);
-
-        in.close();
 
         System.exit(0);
     }
