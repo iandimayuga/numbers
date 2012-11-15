@@ -64,7 +64,7 @@ public class NumberParser
     public static int parseNumber(String text) throws InvalidNumberException
     {
         // Explicitly exclude the empty string
-        if (text.trim().length() == 0)
+        if (null == text || text.trim().length() == 0)
         {
             throw new InvalidNumberException("Empty input is invalid.");
         }
@@ -151,7 +151,7 @@ public class NumberParser
      */
     public static int parseTriple(String triple) throws InvalidNumberException
     {
-        if (triple.trim().length() == 0)
+        if (null == triple || triple.trim().length() == 0)
         {
             throw new InvalidNumberException(String.format("Empty triple is invalid."));
         }
