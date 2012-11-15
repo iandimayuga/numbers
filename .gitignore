@@ -1,6 +1,9 @@
 *.tar.gz
-*.class
 .*.swp
+
+# Output Files #
+dist/
+*.class
 
 # Eclipse Files #
 .classpath
@@ -8,3 +11,4 @@
 .project
 .metadata
 bin/
+
