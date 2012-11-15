@@ -1,0 +1,3 @@
+In this implementation, the repetitive nature of the triple (as in "nine hundred ninety nine") allows for more useful error messages.
+
+In the master regex for parseNumber, any alphabetic or whitespace content is allowed for the triple in all three places (millions, thousands, and ones). This allows potentially invalid representations to be passed along to parseTriple, which will then fail to match with the regex and throw the exception. Upon catching it, parseNumber can then identify which triple had the invalid text. It then rethrows the exception, but now with additional information.
