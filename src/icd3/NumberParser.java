@@ -126,7 +126,7 @@ public class NumberParser
                 {
                     // Add the information regarding the power and rethrow
                     throw new InvalidNumberException(String.format("Invalid triple in the %ss place: %s",
-                            i > 0 ? TRIPLE_POWERS[i] : "one", e.getMessage()));
+                            i > 0 ? TRIPLE_POWERS[i].trim() : "one", e.getMessage()));
                 }
             }
         }
