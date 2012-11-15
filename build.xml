@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Numbers" default="build-jar" basedir=".">
-	<target name="build-jar" description="Create a jar for the Numbers project">
-                <javac srcdir="./src:./test" classpath="junit-4.10.jar" includeantruntime="false"/>
-		<jar jarfile="dist/hw10.jar" includes="icd3/*.class" basedir="." />
-	</target>
+  <target name="build-jar" description="Create a jar for the Numbers project">
+    <mkdir dir="bin"/>
+    <mkdir dir="dist"/>
+    <javac srcdir="./src:./test" classpath="junit-4.10.jar" destdir="bin" includeantruntime="false"/>
+    <jar destfile="dist/hw10.jar" basedir="bin" >
+      <manifest>
+        <attribute name="Main-Class" value="icd3.NumbersMain"/>
+      </manifest>
+    </jar>
+  </target>
 
-	<property name="lib" value="." />
-        <property name="src" value="./src" />
-	<property name="test" value="./test" />
-	<property name="parserTest.class.name" value="icd3.NumberParserTest" />
+  <property name="lib" value="." />
+  <property name="parserTest.class.name" value="icd3.NumberParserTest" />
 
-	<path id="test.classpath">
-          <pathelement location="${src}" />
-	  <pathelement location="${test}" />
-	  <fileset dir="${lib}">
-	    <include name="**/*.jar"/>
-	  </fileset>
-	</path>
+  <path id="test.classpath">
+    <pathelement location="bin" />
+    <fileset dir="${lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
 
-	<target name="parserTest">
-	  <junit fork="yes" haltonfailure="yes">
-	    <test name="${parserTest.class.name}" />
-	    <formatter type="plain" usefile="false" />
-	    <classpath refid="test.classpath" />
-	  </junit>
-	</target>
+  <target name="parserTest">
+    <junit fork="yes" haltonfailure="yes">
+      <test name="${parserTest.class.name}" />
+      <formatter type="plain" usefile="false" />
+      <classpath refid="test.classpath" />
+    </junit>
+  </target>
 </project>
